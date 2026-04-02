@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskFlow Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,system-ui,sans-serif;background:linear-gradient(135deg,#f5f7fa,#e4ecf7);min-height:100vh;display:flex;align-items:center;justify-content:center}
+.card{background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border-radius:24px;padding:48px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.08);max-width:600px}
+h1{font-size:28px;color:#333;margin-bottom:12px}
+p{color:#666;line-height:1.6;margin-bottom:16px}
+.btn{display:inline-block;padding:14px 32px;background:linear-gradient(135deg,#5C7CFA,#4263EB);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(92,124,250,.35)}
+.features{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0;text-align:left}
+.feat{padding:10px 14px;background:#f8f9ff;border-radius:10px;font-size:13px;color:#555}
+.feat strong{color:#5C7CFA}
+.logo{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#5C7CFA,#4263EB);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 8px 24px rgba(92,124,250,.3)}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="card">
+<div class="logo"><svg width="28" height="28" fill="none" stroke="#fff" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></div>
+<h1>TaskFlow Dashboard</h1>
+<p>Project management dashboard with Kanban boards, calendar, analytics, team collaboration, and CSV export.</p>
+<div class="features">
+<div class="feat"><strong>Kanban Board</strong> - Drag-and-drop task management</div>
+<div class="feat"><strong>Calendar</strong> - Monthly view with due dates</div>
+<div class="feat"><strong>Analytics</strong> - Charts and progress tracking</div>
+<div class="feat"><strong>Team</strong> - Member management and workload</div>
+<div class="feat"><strong>Auth</strong> - Login/register with roles</div>
+<div class="feat"><strong>CSV Export</strong> - Download task data</div>
+</div>
+<p style="font-size:13px;color:#888;">Run the Next.js app for the full interactive experience:<br><code style="background:#f0f0f0;padding:4px 8px;border-radius:6px;font-size:12px;">cd task-dashboard && npm run dev</code></p>
+<a class="btn" href="#" onclick="window.location.href=window.location.origin">Start the App</a>
+</div>
+</body>
+</html>
