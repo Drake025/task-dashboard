@@ -11,6 +11,8 @@ import CalendarView from '@/components/CalendarView';
 import AnalyticsView from '@/components/AnalyticsView';
 import TeamView from '@/components/TeamView';
 import TasksView from '@/components/TasksView';
+import EmployeeDashboard from '@/components/EmployeeDashboard';
+import MemberManagement from '@/components/MemberManagement';
 
 export default function Home() {
   const { isAuthenticated, activeView, darkMode } = useApp();
@@ -20,11 +22,11 @@ export default function Home() {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
 
       if (e.key === '1') useApp().setActiveView('dashboard');
-      if (e.key === '2') useApp().setActiveView('kanban');
-      if (e.key === '3') useApp().setActiveView('calendar');
-      if (e.key === '4') useApp().setActiveView('analytics');
-      if (e.key === '5') useApp().setActiveView('team');
-      if (e.key === '6') useApp().setActiveView('tasks');
+      if (e.key === '2') useApp().setActiveView('my-dashboard');
+      if (e.key === '3') useApp().setActiveView('kanban');
+      if (e.key === '4') useApp().setActiveView('calendar');
+      if (e.key === '5') useApp().setActiveView('analytics');
+      if (e.key === '6') useApp().setActiveView('team');
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -38,10 +40,12 @@ export default function Home() {
   const renderView = () => {
     switch (activeView) {
       case 'dashboard': return <DashboardView />;
+      case 'my-dashboard': return <EmployeeDashboard />;
       case 'kanban': return <KanbanView />;
       case 'calendar': return <CalendarView />;
       case 'analytics': return <AnalyticsView />;
       case 'team': return <TeamView />;
+      case 'members': return <MemberManagement />;
       case 'tasks': return <TasksView />;
       default: return <DashboardView />;
     }

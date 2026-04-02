@@ -10,10 +10,12 @@ export default function Header() {
 
   const titles: Record<string, string> = {
     dashboard: 'Dashboard',
+    'my-dashboard': 'My Dashboard',
     kanban: 'Kanban Board',
     calendar: 'Calendar',
     analytics: 'Analytics',
     team: 'Team',
+    members: 'Members',
     tasks: 'All Tasks',
   };
 

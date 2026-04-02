@@ -45,6 +45,9 @@ interface AppContextType extends AppState {
   addTimeEntry: (taskId: string, entry: Omit<TimeEntry, 'id'>) => void;
   showToast: (message: string, type?: Toast['type']) => void;
   dismissToast: (id: string) => void;
+  addMember: (member: Omit<User, 'id'>) => void;
+  deleteMember: (id: string) => void;
+  updateMember: (id: string, updates: Partial<User>) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -75,6 +78,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
           currentUser: parsed.currentUser || null,
           isAuthenticated: parsed.isAuthenticated || false,
           tasks: parsed.tasks || defaultTasks,
+          users: parsed.users || defaultUsers,
           notifications: parsed.notifications || defaultNotifications,
           darkMode: parsed.darkMode || false,
         }));
@@ -88,11 +92,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
         currentUser: state.currentUser,
         isAuthenticated: state.isAuthenticated,
         tasks: state.tasks,
+        users: state.users,
         notifications: state.notifications,
         darkMode: state.darkMode,
       }));
     } catch {}
-  }, [state.currentUser, state.isAuthenticated, state.tasks, state.notifications, state.darkMode]);
+  }, [state.currentUser, state.isAuthenticated, state.tasks, state.users, state.notifications, state.darkMode]);
 
   useEffect(() => {
     if (state.darkMode) {
@@ -296,6 +301,41 @@ export function AppProvider({ children }: { children: ReactNode }) {
     showToast(`Logged ${entry.hours}h`, 'success');
   }, [showToast]);
 
+  const addMember = useCallback((member: Omit<User, 'id'>) => {
+    if (state.users.find(u => u.email === member.email)) {
+      showToast('Email already exists', 'error');
+      return;
+    }
+    const newUser: User = { ...member, id: String(Date.now()) };
+    setState(prev => ({ ...prev, users: [...prev.users, newUser] }));
+    showToast(`${newUser.name} added to team`, 'success');
+  }, [state.users, showToast]);
+
+  const deleteMember = useCallback((id: string) => {
+    const user = state.users.find(u => u.id === id);
+    if (user?.role === 'admin' && state.users.filter(u => u.role === 'admin').length <= 1) {
+      showToast('Cannot delete the last admin', 'error');
+      return;
+    }
+    setState(prev => ({
+      ...prev,
+      users: prev.users.filter(u => u.id !== id),
+      tasks: prev.tasks.map(t => ({
+        ...t,
+        assignee: t.assignee?.id === id ? null : t.assignee,
+      })),
+    }));
+    showToast(`${user?.name} removed from team`, 'info');
+  }, [state.users, showToast]);
+
+  const updateMember = useCallback((id: string, updates: Partial<User>) => {
+    setState(prev => ({
+      ...prev,
+      users: prev.users.map(u => u.id === id ? { ...u, ...updates } : u),
+    }));
+    showToast('Member updated', 'success');
+  }, [showToast]);
+
   return (
     <AppContext.Provider value={{
       ...state,
@@ -306,6 +346,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       getUnreadCount,
       toggleSubtask, addSubtask, removeSubtask,
       addTimeEntry,
+      addMember, deleteMember, updateMember,
       showToast, dismissToast,
     }}>
       {children}
